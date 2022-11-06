@@ -10,7 +10,7 @@
     "start:dev": "nodemon -q",
     "prepare": "husky install",
     "test-coverage": "jest src --coverage --watchAll=false",
-    "jest-coverage": "jest src --coverage",
+    "jest-coverage": "jest src --coverage --passWithNoTest",
     "test-dev": "jest src --watchAll"
   },
   "keywords": [],
