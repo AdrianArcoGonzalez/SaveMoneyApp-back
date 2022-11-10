@@ -1,14 +1,12 @@
 import "./loadEnvironment";
 import connectDatabase from "./database";
 import startServer from "./server/startServer";
-
-const port = process.env.PORT ?? 4500;
-const urlMongo = process.env.MONGOURL as string;
+import environments from "./utils/environment";
 
 (async () => {
   try {
-    await startServer(+port);
-    await connectDatabase(urlMongo);
+    await startServer(environments.port);
+    await connectDatabase(environments.databaseUrl);
   } catch (error) {
     process.exit(1);
   }
