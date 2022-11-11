@@ -16,6 +16,7 @@ const app = express();
 app.disable("x-powered-by");
 app.use(cors(corsOptions));
 app.use(express.json());
+
 app.use((req, _res, next) => {
   debug(chalk.blue(`A request arrived to ${req.url}`));
   next();
