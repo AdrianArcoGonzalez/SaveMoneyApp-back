@@ -15,7 +15,7 @@ const registerUser = async (
     user.password = await bcryptjs.hash(user.password, salt);
     await User.create(user);
     res.status(201).json({
-      message: `User ${user.username} was registered sucessfully.`,
+      message: `User ${user.userName} was registered sucessfully.`,
     });
   } catch (error) {
     next(error);
