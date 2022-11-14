@@ -12,7 +12,8 @@
     "prepare": "husky install",
     "test-coverage": "jest src --coverage --watchAll=false",
     "jest-coverage": "jest src --coverage --passWithNoTests",
-    "test-dev": "jest src --watchAll"
+    "test-dev": "jest src --watchAll",
+    "test": "jest src"
   },
   "keywords": [],
   "author": "",
@@ -51,5 +52,5 @@
     "mongodb-memory-server": "^8.10.0",
     "mongoose": "^6.7.2",
     "supertest": "^6.3.1"
-}
+  }
 }
