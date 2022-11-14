@@ -13,7 +13,7 @@
     "test-coverage": "jest src --coverage --watchAll=false",
     "jest-coverage": "jest src --coverage --passWithNoTests",
     "test-dev": "jest src --watchAll",
-    "test": "jest src"
+    "test": "jest src --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
