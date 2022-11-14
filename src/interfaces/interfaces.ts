@@ -1,4 +1,3 @@
-
 export interface LoginData {
   userName: string;
   password: string;
@@ -15,7 +14,7 @@ export interface UserData {
   options: {};
   id: string;
 }
-export interface UserResgiter {
+export interface UserRegister {
   userName: string;
   password: string;
   email: string;
