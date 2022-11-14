@@ -1,16 +1,15 @@
 export interface LoginData {
-  id: string;
   userName: string;
   password: string;
 }
 
 export interface IJwtPayload {
   id: string;
-  username: string;
+  userName: string;
 }
 
 export interface UserData {
-  username: string;
+  userName: string;
   password: string;
   options: {};
   id: string;

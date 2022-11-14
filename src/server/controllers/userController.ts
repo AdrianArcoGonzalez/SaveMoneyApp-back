@@ -4,21 +4,18 @@ import { IJwtPayload, LoginData, UserData } from "../../interfaces/interfaces";
 import { createToken, hashComparer } from "../../utils/authentication";
 
 const loginUser = async (req: Request, res: Response, next: NextFunction) => {
-  const user = req.body.user as LoginData;
+  const user = req.body as LoginData;
   let foundUser: UserData[];
-  const errorPassword = new Error("User or password not valid");
+  const errorLogin = new Error("User or password not valid");
 
   try {
     foundUser = await User.find({ userName: user.userName });
 
     if (foundUser.length === 0) {
-      const notFoundUserError = new Error("No user Found");
-      next(notFoundUserError);
+      next(errorLogin);
       return;
     }
   } catch (error) {
-    const errorLogin = new Error("Error on login");
-
     next(errorLogin);
   }
 
@@ -29,15 +26,15 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     );
 
     if (!isPasswordValid) {
-      next(errorPassword);
+      next(errorLogin);
     }
   } catch (error) {
-    next(errorPassword);
+    next(errorLogin);
   }
 
   const payload: IJwtPayload = {
     id: foundUser[0].id,
-    username: foundUser[0].username,
+    userName: foundUser[0].userName,
   };
 
   const response = { user: { token: createToken(payload) } };
