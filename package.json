@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
+    "build": "npm run ts",
     "ts": "tsc",
     "ts:dev": "tsc -w",
     "start": "node .",
@@ -11,7 +12,8 @@
     "prepare": "husky install",
     "test-coverage": "jest src --coverage --watchAll=false",
     "jest-coverage": "jest src --coverage --passWithNoTests",
-    "test-dev": "jest src --watchAll"
+    "test-dev": "jest src --watchAll",
+    "test": "jest src --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +21,7 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/jest": "^28.1.6",
+    "@types/jsonwebtoken": "^8.5.9",
     "@types/node": "^18.7.1",
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.33.0",
@@ -45,6 +48,7 @@
     "debug": "^4.3.4",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
     "mongodb-memory-server": "^8.10.0",
     "mongoose": "^6.7.2",
     "supertest": "^6.3.1"
