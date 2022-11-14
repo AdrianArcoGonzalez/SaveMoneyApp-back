@@ -1,9 +1,19 @@
 import { NextFunction, Request, Response } from "express";
+import bcryptjs from "bcryptjs";
 import User from "../../database/models/User";
-import { IJwtPayload, LoginData, UserData } from "../../interfaces/interfaces";
+import {
+  IJwtPayload,
+  LoginData,
+  UserData,
+  UserRegister,
+} from "../../interfaces/interfaces";
 import { createToken, hashComparer } from "../../utils/authentication";
 
-const loginUser = async (req: Request, res: Response, next: NextFunction) => {
+export const loginUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const user = req.body as LoginData;
   let foundUser: UserData[];
   const errorLogin = new Error("User or password not valid");
@@ -42,4 +52,21 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
   res.status(200).json(response);
 };
 
-export default loginUser;
+export const registerUser = async (
+  req: Request,
+  res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  next: NextFunction
+) => {
+  const user: UserRegister = req.body;
+  const salt = 10;
+  try {
+    user.password = await bcryptjs.hash(user.password, salt);
+    await User.create(user);
+    res.status(201).json({
+      message: `User ${user.userName} was registered sucessfully.`,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
