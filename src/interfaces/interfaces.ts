@@ -19,3 +19,9 @@ export interface UserRegister {
   password: string;
   email: string;
 }
+
+export interface ICustomError extends Error {
+  statusCode: number;
+  publicMessage?: string;
+  privateMessage?: string;
+}
