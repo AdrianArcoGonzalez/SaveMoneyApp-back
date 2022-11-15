@@ -4,6 +4,7 @@ import User from "../../database/models/User";
 import { UserData } from "../../interfaces/interfaces";
 import testUtils from "../../utils/testUtils";
 import { loginUser, registerUser } from "./userController";
+import CustomError from "../../utils/customError/customError";
 
 let mockHashCompareValue: boolean | Error = true;
 jest.mock("../../utils/authentication", () => ({
@@ -20,7 +21,11 @@ const mockUser: UserData = {
   options: {},
 };
 
-const errorLogin = new Error("User or password not valid");
+const errorLogin = new CustomError(
+  403,
+  "User not found",
+  "Error with the authentication"
+);
 
 describe("Given a usercontroller controler", () => {
   const next: NextFunction = jest.fn();
