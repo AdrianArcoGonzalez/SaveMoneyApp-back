@@ -8,6 +8,7 @@ import {
   UserRegister,
 } from "../../interfaces/interfaces";
 import { createToken, hashComparer } from "../../utils/authentication";
+import CustomError from "../../utils/customError/customError";
 
 export const loginUser = async (
   req: Request,
@@ -16,7 +17,11 @@ export const loginUser = async (
 ) => {
   const user = req.body as LoginData;
   let foundUser: UserData[];
-  const errorLogin = new Error("User or password not valid");
+  const errorLogin = new CustomError(
+    403,
+    "User not found",
+    "Error with the authentication"
+  );
 
   try {
     foundUser = await User.find({ userName: user.userName });
@@ -26,7 +31,11 @@ export const loginUser = async (
       return;
     }
   } catch (error) {
+    errorLogin.publicMessage = "User or password not found";
+    errorLogin.message = error.message;
+
     next(errorLogin);
+    return;
   }
 
   try {
@@ -36,9 +45,13 @@ export const loginUser = async (
     );
 
     if (!isPasswordValid) {
+      errorLogin.message = "Password invalid";
+
       next(errorLogin);
+      return;
     }
   } catch (error) {
+    errorLogin.message = error.message;
     next(errorLogin);
   }
 
@@ -67,6 +80,12 @@ export const registerUser = async (
       message: `User ${user.userName} was registered sucessfully.`,
     });
   } catch (error) {
-    next(error);
+    const customError = new CustomError(
+      400,
+      error.message,
+      "Error with register user."
+    );
+
+    next(customError);
   }
 };
