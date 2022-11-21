@@ -4,6 +4,7 @@ import chalk from "chalk";
 import Debug from "debug";
 import cors from "cors";
 import userRoutes from "./routes/userRoutes";
+import { errorNotFound, generalError } from "./middlewares/error/generalError";
 
 const corsOptions = {
   origin: "*",
@@ -23,4 +24,8 @@ app.use((req, _res, next) => {
 });
 
 app.use("/user", userRoutes);
+
+app.use("/", errorNotFound);
+app.use(generalError);
+
 export default app;
