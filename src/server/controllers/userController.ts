@@ -4,8 +4,8 @@ import User from "../../database/models/User";
 import {
   IJwtPayload,
   LoginData,
-  UserData,
   UserRegister,
+  IUserFromDb,
 } from "../../interfaces/interfaces";
 import { createToken, hashComparer } from "../../utils/authentication";
 import CustomError from "../../utils/customError/customError";
@@ -16,7 +16,7 @@ export const loginUser = async (
   next: NextFunction
 ) => {
   const user = req.body as LoginData;
-  let foundUser: UserData[];
+  let foundUser: IUserFromDb[];
   const errorLogin = new CustomError(
     403,
     "User not found",
@@ -25,7 +25,6 @@ export const loginUser = async (
 
   try {
     foundUser = await User.find({ userName: user.userName });
-
     if (foundUser.length === 0) {
       next(errorLogin);
       return;
@@ -58,6 +57,11 @@ export const loginUser = async (
   const payload: IJwtPayload = {
     id: foundUser[0].id,
     userName: foundUser[0].userName,
+    currency: foundUser[0].currency,
+    expenses: foundUser[0].expenses,
+    incomes: foundUser[0].incomes,
+    moneySaved: foundUser[0].moneySaved,
+    savingTarget: foundUser[0].savingTarget,
   };
 
   const response = { user: { token: createToken(payload) } };
