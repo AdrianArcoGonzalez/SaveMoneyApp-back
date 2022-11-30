@@ -1,4 +1,5 @@
 import { model, Schema } from "mongoose";
+import { ExpenseIncome } from "../../interfaces/interfaces";
 
 const userSchema = new Schema({
   userName: {
@@ -15,8 +16,22 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
-  options: {
-    type: {},
+  incomes: {
+    type: Array<ExpenseIncome>,
+  },
+
+  expenses: {
+    type: Array<ExpenseIncome>,
+  },
+
+  moneySaved: {
+    type: Number,
+  },
+  currency: {
+    type: String,
+  },
+  savingTarget: {
+    type: Number,
   },
 });
 
